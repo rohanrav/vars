@@ -53,8 +53,6 @@ These are the currently released versions of our client-side app, including rele
 
 After downloading the installer for your respective operating system, run it and install the application.
 
-Note: For testing the AI features, you can use the API Key: `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`
-
 # Team Members:
 
 1. Aditya Srinivasan Mani - a33srini@uwaterloo.ca
