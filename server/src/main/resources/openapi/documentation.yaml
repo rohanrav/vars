@@ -1,0 +1,186 @@
+openapi: "3.0.3"
+info:
+  title: "Vars Application API"
+  description: "Application API"
+  version: "1.0.0"
+servers:
+  - url: "http://0.0.0.0:3000"
+paths:
+  /:
+    get:
+      description: "Hello World!"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "Hello World!"
+  /task:
+    post:
+      description: "Create or update a task"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+      responses:
+        "201":
+          description: "Task created successfully"
+        "200":
+          description: "Task updated successfully"
+        "400":
+          description: "Invalid task format"
+        "500":
+          description: "Error creating or updating task"
+    get:
+      description: "Get all tasks"
+      responses:
+        "200":
+          description: "List of tasks"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: '#/components/schemas/Task'
+        "500":
+          description: "Error fetching all tasks"
+    delete:
+      description: "Delete a task"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+      responses:
+        "200":
+          description: "Task deleted successfully"
+        "400":
+          description: "Invalid task format"
+        "500":
+          description: "Error deleting task"
+  /scrape:
+    get:
+      description: "Scrape tasks from a specified website"
+      parameters:
+        - name: "course_name"
+          in: "query"
+          required: true
+          schema:
+            type: "string"
+        - name: "website_url"
+          in: "query"
+          required: true
+          schema:
+            type: "string"
+        - name: "date_index"
+          in: "query"
+          required: true
+          schema:
+            type: "integer"
+        - name: "assignment_index"
+          in: "query"
+          required: true
+          schema:
+            type: "integer"
+      responses:
+        "200":
+          description: "List of scraped tasks"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: '#/components/schemas/Task'
+        "400":
+          description: "Invalid parameters"
+        "500":
+          description: "Error during scraping"
+  /tasks/bulk:
+    post:
+      description: "Adds tasks in bulk and returns all tasks"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "array"
+              items:
+                $ref: '#/components/schemas/Task'
+      responses:
+        "200":
+          description: "List of all tasks"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: '#/components/schemas/Task'
+        "400":
+          description: "Invalid task format"
+        "500":
+          description: "Error adding bulk tasks"
+  /generate-tasks-from-outline:
+    get:
+      description: "Generate tasks from a course outline"
+      parameters:
+        - name: "courseOutline"
+          in: "query"
+          required: true
+          schema:
+            type: "string"
+        - name: "courseName"
+          in: "query"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "List of tasks generated from the course outline"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: '#/components/schemas/Task'
+        "400":
+          description: "Missing course outline or course name"
+        "500":
+          description: "Error generating tasks from course outline"
+  /export-ics:
+    get:
+      description: "Export tasks as an ICS file content as a string"
+      responses:
+        "200":
+          description: "ICS file content string"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+        "500":
+          description: "Error generating ICS file string"
+
+components:
+  schemas:
+    Task:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        taskName:
+          type: "string"
+        dueDate:
+          type: "string"
+          format: "date-time"
+        course:
+          type: "string"
+        weight:
+          type: "number"
+          format: "double"

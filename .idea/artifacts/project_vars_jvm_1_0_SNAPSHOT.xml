@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="project-vars-jvm-1.0-SNAPSHOT">
+    <output-path>$PROJECT_DIR$/client/build/libs</output-path>
+    <root id="archive" name="project-vars-jvm-1.0-SNAPSHOT.jar">
+      <element id="module-output" name="com.vars.project-vars.jvmMain" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,3 @@
+package utils
+
+const val OPENAI_CHARACTER_PROMPT_SIZE_LIMIT = 36000
